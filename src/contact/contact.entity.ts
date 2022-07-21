@@ -15,7 +15,7 @@ export class Contact {
   @Column()
   email: string;
 
-  @OneToOne(() => Users, (users) => users.contact)
+  @OneToOne(() => Users, (user) => user.contact)
   @JoinColumn()
-  users: Users;
+  user: Users;
 }

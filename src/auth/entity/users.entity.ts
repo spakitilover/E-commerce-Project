@@ -25,7 +25,7 @@ export class Users {
   @Column()
   password: string;
 
-  @OneToOne(() => Contact, (contact) => contact.users)
+  @OneToOne(() => Contact, (contact) => contact.user)
   contact: Contact;
 
   @OneToMany(() => Order, (order) => order.users)
