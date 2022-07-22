@@ -3,9 +3,9 @@ import { Order } from 'src/order/order.entity';
 import {
   Column,
   Entity,
+  JoinColumn,
   ManyToMany,
   ManyToOne,
-  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -13,6 +13,9 @@ import {
 export class Product {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @Column()
+  name: string;
 
   @Column()
   titile: string;
@@ -23,7 +26,11 @@ export class Product {
   @Column()
   price: number;
 
+  @Column()
+  create_at: Date;
+
   @ManyToOne(() => CateGory, (category) => category.products)
+  @JoinColumn()
   category: CateGory;
 
   @ManyToMany(() => Order, (orders) => orders.products)

@@ -9,6 +9,12 @@ export class CateGory {
   @Column()
   name: string;
 
+  @Column()
+  desc: string;
+
+  @Column()
+  create_at: Date;
+
   @OneToMany(() => Product, (products) => products.category)
   products: Product;
 }

@@ -25,6 +25,9 @@ export class Users {
   @Column()
   password: string;
 
+  @Column()
+  created_at: Date;
+
   @OneToOne(() => Contact, (contact) => contact.user)
   contact: Contact;
 

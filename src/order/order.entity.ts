@@ -21,6 +21,7 @@ export class Order {
   total: number;
 
   @ManyToOne(() => Users, (users) => users.order)
+  @JoinColumn()
   users: Users;
 
   @ManyToMany(() => Product, (products) => products.orders)
