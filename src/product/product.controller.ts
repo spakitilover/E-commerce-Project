@@ -1,10 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
-import { ProductService } from './product.service';
+import { Controller } from '@nestjs/common';
 
 @Controller('product')
-export class ProductController {
-  constructor(private productService: ProductService) {}
-
-  @Post('CreateProduct')
-  createProduct() {}
-}
+export class ProductController {}
