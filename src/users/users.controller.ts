@@ -5,12 +5,14 @@ import {
   Get,
   Param,
   Post,
+  Req,
   Request,
   UseGuards,
 } from '@nestjs/common';
 import { AuthService } from 'src/auth/auth.service';
 import { JwtLocalGuard } from 'src/auth/jwt-local.guard';
 import { LocalAuthGuard } from 'src/auth/local-auth.guard';
+import { LocalGoogleGuard } from 'src/startegy/local-google.guard';
 import { UsersDto } from './dto/users.dto';
 import { UsersService } from './users.service';
 
@@ -21,6 +23,7 @@ export class UsersController {
     private authService: AuthService,
   ) {}
 
+  ///////////////////////////////////// LOCAL AUTH .../////////////////////////////////
   @UseGuards(LocalAuthGuard)
   @Post('login')
   async login(@Request() req) {
@@ -32,7 +35,21 @@ export class UsersController {
   proc(@Request() req) {
     return req.user;
   }
+  ////////////////////////////////////////////////////////////////////////////////////////////
 
+  ///////////////////////////////////////////////// GOOGLE AUTH ...///////////////////////////
+  @Get('auth/google')
+  @UseGuards(LocalGoogleGuard)
+  async googleAuth(@Req() req) {}
+
+  @Get('auth/google/callback')
+  @UseGuards(LocalGoogleGuard)
+  async googleAuthRedirect(@Req() req) {
+    return await this.usersService.googleLogin(req);
+  }
+  ///////////////////////////////////////////////////////////////////////////////////////////////
+
+  /////////////// USER ROUTES  CRUD ////////////////////////////////////////////////////////////////////
   @Get()
   fillAll() {
     return this.usersService.findAll();

@@ -16,6 +16,20 @@ export class UsersService {
     });
   }
 
+  /// GOOGLE AUTH
+
+  async googleLogin(req) {
+    if (!req.user) {
+      return 'no user from google';
+    }
+    return {
+      message: 'user from google',
+      user: req.user,
+    };
+  }
+
+  ///
+
   async findAll() {
     return await this.usersRepo.find();
   }

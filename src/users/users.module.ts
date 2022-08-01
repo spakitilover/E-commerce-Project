@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Users } from './entity/users.entity';
 import { AuthService } from 'src/auth/auth.service';
 import { JwtModule, JwtService } from '@nestjs/jwt';
+import { GoogleStrategy } from 'src/startegy/google.startegy';
 
 @Module({
   imports: [
@@ -14,7 +15,7 @@ import { JwtModule, JwtService } from '@nestjs/jwt';
       signOptions: { expiresIn: '60s' },
     }),
   ],
-  providers: [UsersService, AuthService],
+  providers: [UsersService, AuthService, GoogleStrategy],
   controllers: [UsersController],
   exports: [UsersService],
 })
