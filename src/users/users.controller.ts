@@ -60,6 +60,11 @@ export class UsersController {
     return await this.usersService.create(users);
   }
 
+  @Get(':id')
+  async findOne(@Param('id') id: number) {
+    return await this.usersService.findById(id);
+  }
+
   @Delete(':id')
   async remove(@Param('id') id: number) {
     return await this.usersService.delete(id);

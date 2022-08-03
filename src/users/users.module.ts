@@ -12,7 +12,7 @@ import { GoogleStrategy } from 'src/startegy/google.startegy';
     TypeOrmModule.forFeature([Users]),
     JwtModule.register({
       secret: 'SECRET',
-      signOptions: { expiresIn: '60s' },
+      signOptions: { expiresIn: '6000s' },
     }),
   ],
   providers: [UsersService, AuthService, GoogleStrategy],

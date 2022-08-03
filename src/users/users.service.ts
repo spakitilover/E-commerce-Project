@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { use } from 'passport';
+import { Orders } from 'src/order/entity/order.entity';
 import { Repository } from 'typeorm';
 import { UsersDto } from './dto/users.dto';
 import { Users } from './entity/users.entity';
@@ -31,7 +32,7 @@ export class UsersService {
   ///
 
   async findAll() {
-    return await this.usersRepo.find();
+    return await this.usersRepo.find({ relations: { orders: true } });
   }
 
   async create(users: UsersDto) {
@@ -41,8 +42,11 @@ export class UsersService {
   }
 
   async findById(id: number) {
-    const user = await this.usersRepo.findOne({ where: { id: id } });
-    if (!id) {
+    const user = await this.usersRepo.findOne({
+      relations: { orders: true },
+      where: { id },
+    });
+    if (!user) {
       throw new NotFoundException();
     }
     return user;
