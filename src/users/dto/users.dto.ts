@@ -16,7 +16,7 @@ export class UsersDto {
   @IsString()
   address: string;
 
-  @IsPhoneNumber()
+  @IsNumber()
   phone: number;
 
   @IsString()
