@@ -1,12 +1,18 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
+  NotFoundException,
+  Param,
   Post,
   Request,
   UseGuards,
 } from '@nestjs/common';
+import { NotFoundError } from 'rxjs';
 import { LocalAuthGuard } from 'src/auth/local-auth.guard';
+import { CategoryDto } from 'src/category/dto/category.dto';
+import { Category } from 'src/category/entity/category.entity';
 import { ProductsDto } from './dto/product.dto';
 import { Products } from './entity/product.entity';
 import { ProductService } from './product.service';
@@ -21,7 +27,16 @@ export class ProductController {
   }
 
   @Post()
-  async createProduct(@Body() body: ProductsDto) {
-    return await this.productService.createProduct(body);
+  async createProduct(@Body() body: ProductsDto, @Body() cate: Category) {
+    return await this.productService.createProduct(body, cate);
+  }
+
+  @Delete(':id')
+  async remove(@Param('id') id: number) {
+    const product = await this.productService.removeProduct(id);
+    if (!product) {
+      throw new NotFoundException('product not found');
+    }
+    return product;
   }
 }

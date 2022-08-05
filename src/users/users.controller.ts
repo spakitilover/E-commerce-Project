@@ -15,6 +15,7 @@ import { LocalAuthGuard } from 'src/auth/local-auth.guard';
 import { LocalGoogleGuard } from 'src/startegy/local-google.guard';
 import { UsersDto } from './dto/users.dto';
 import { UsersService } from './users.service';
+import { GetUser } from './decorator/user.decorator';
 
 @Controller('users')
 export class UsersController {
@@ -26,14 +27,14 @@ export class UsersController {
   ///////////////////////////////////// LOCAL AUTH .../////////////////////////////////
   @UseGuards(LocalAuthGuard)
   @Post('login')
-  async login(@Request() req) {
-    return this.authService.login(req.user);
+  async login(@GetUser() user) {
+    return this.authService.login(user);
   }
 
   @UseGuards(JwtLocalGuard)
   @Get('pro')
-  proc(@Request() req) {
-    return req.user;
+  proc(@GetUser() user) {
+    return user;
   }
   ////////////////////////////////////////////////////////////////////////////////////////////
 

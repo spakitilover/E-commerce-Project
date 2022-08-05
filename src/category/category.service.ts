@@ -13,7 +13,7 @@ export class CategoryService {
   ) {}
 
   async findAll(): Promise<Category[]> {
-    return await this.categoryRepo.find({ relations: { products: true } });
+    return await this.categoryRepo.find();
   }
 
   async findOnes(id: number) {

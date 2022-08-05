@@ -1,5 +1,14 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Body,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { CategoryService } from 'src/category/category.service';
+import { CategoryDto } from 'src/category/dto/category.dto';
+import { Category } from 'src/category/entity/category.entity';
+
 import { Repository } from 'typeorm';
 import { ProductsDto } from './dto/product.dto';
 import { Products } from './entity/product.entity';
@@ -8,6 +17,8 @@ import { Products } from './entity/product.entity';
 export class ProductService {
   constructor(
     @InjectRepository(Products) private productRepo: Repository<Products>,
+    @InjectRepository(Category) private categoryRepo: Repository<Category>,
+    private categoryService: CategoryService,
   ) {}
 
   async findAll() {
@@ -22,10 +33,15 @@ export class ProductService {
     return product;
   }
 
-  async createProduct(productDto: ProductsDto) {
-    const product = await this.productRepo.create(productDto);
+  async createProduct(productDto: ProductsDto, categorys: Category) {
+    const productss = await this.productRepo.create(productDto);
 
-    return await this.productRepo.save(product);
+    await this.productRepo.save(productss);
+
+    const category = await this.categoryService.findOnes(categorys.id);
+
+    category.products = [productss];
+    await this.categoryRepo.save(category);
   }
 
   async removeProduct(id: number) {

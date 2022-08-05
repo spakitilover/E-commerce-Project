@@ -13,7 +13,7 @@ export class Category {
   id: number;
 
   @Column()
-  name: string;
+  categoryName: string;
 
   @CreateDateColumn()
   created_at: Date;
