@@ -27,7 +27,7 @@ export class ProductController {
   }
 
   @Post()
-  async createProduct(@Body() body: ProductsDto, @Body() cate: Category) {
+  async createProduct(@Body() body: ProductsDto, @Body() cate: CategoryDto) {
     return await this.productService.createProduct(body, cate);
   }
 

@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import { CategoryService } from './category.service';
 import { CategoryDto } from './dto/category.dto';
+import { Category } from './entity/category.entity';
 
 @Controller('category')
 export class CategoryController {
@@ -17,6 +18,11 @@ export class CategoryController {
   @Get()
   async findAll() {
     return await this.categoryService.findAll();
+  }
+
+  @Get('name')
+  async findByCategoryName(@Body() body: CategoryDto) {
+    return await this.categoryService.findByCategoryName(body.categoryName);
   }
 
   @Get(':id')

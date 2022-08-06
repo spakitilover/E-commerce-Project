@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Products } from 'src/product/entity/product.entity';
 import { Repository } from 'typeorm';
@@ -15,6 +19,24 @@ export class CategoryService {
   async findAll(): Promise<Category[]> {
     return await this.categoryRepo.find();
   }
+
+  ///Finding a category by Name;
+  async findByCategoryName(categoryName: string) {
+    const category = await this.categoryRepo.findOne({
+      where: {
+        categoryName: categoryName,
+      },
+      relations: {
+        products: true,
+      },
+    });
+
+    if (!category) {
+      throw new BadRequestException('not found');
+    }
+    return await category;
+  }
+  ///
 
   async findOnes(id: number) {
     const category = await this.categoryRepo.findOne({

@@ -2,6 +2,7 @@ import { Injectable, NotFoundException, Req } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UsersDto } from 'src/users/dto/users.dto';
 import { Users } from 'src/users/entity/users.entity';
+import { UsersService } from 'src/users/users.service';
 import { Repository } from 'typeorm';
 import { OrderDto } from './dto/order.dto';
 import { Orders } from './entity/order.entity';
@@ -11,6 +12,7 @@ export class OrderService {
   constructor(
     @InjectRepository(Orders) private ordersRepo: Repository<Orders>,
     @InjectRepository(Users) private usersRepo: Repository<Users>,
+    private usersService: UsersService,
   ) {}
 
   async findAll() {

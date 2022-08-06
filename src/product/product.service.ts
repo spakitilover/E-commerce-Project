@@ -1,6 +1,7 @@
 import {
   BadRequestException,
   Body,
+  Delete,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -33,15 +34,16 @@ export class ProductService {
     return product;
   }
 
-  async createProduct(productDto: ProductsDto, categorys: Category) {
+  async createProduct(productDto: ProductsDto, categorys: CategoryDto) {
     const productss = await this.productRepo.create(productDto);
 
-    await this.productRepo.save(productss);
+    const category = await this.categoryRepo.create({ id: categorys.id });
 
-    const category = await this.categoryService.findOnes(categorys.id);
-
-    category.products = [productss];
     await this.categoryRepo.save(category);
+
+    productss.category = category;
+
+    return await this.productRepo.save(productss);
   }
 
   async removeProduct(id: number) {

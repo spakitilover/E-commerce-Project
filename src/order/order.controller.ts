@@ -8,7 +8,9 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
+import { userInfo } from 'os';
 import { JwtLocalGuard } from 'src/auth/jwt-local.guard';
+import { GetUser } from 'src/users/decorator/user.decorator';
 import { OrderDto } from './dto/order.dto';
 import { OrderService } from './order.service';
 
@@ -16,9 +18,8 @@ import { OrderService } from './order.service';
 export class OrderController {
   constructor(private orderService: OrderService) {}
 
-  @UseGuards(JwtLocalGuard)
   @Get(':id')
-  async getOrderById(@Param('id') id: number, @Req() req) {
+  async getOrderById(@Param('id') id: number) {
     return this.orderService.getOrderById(id);
   }
 
@@ -27,6 +28,7 @@ export class OrderController {
     return await this.orderService.findAll();
   }
 
+  @UseGuards(JwtLocalGuard)
   @Post()
   async createOrder(@Body() orderDto: OrderDto) {
     return await this.orderService.createOrder(orderDto);
