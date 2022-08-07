@@ -1,5 +1,6 @@
 import {
   Body,
+  ClassSerializerInterceptor,
   Controller,
   Delete,
   Get,
@@ -8,6 +9,7 @@ import {
   Req,
   Request,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { AuthService } from 'src/auth/auth.service';
 import { JwtLocalGuard } from 'src/auth/jwt-local.guard';
@@ -51,6 +53,8 @@ export class UsersController {
   ///////////////////////////////////////////////////////////////////////////////////////////////
 
   /////////////// USER ROUTES  CRUD ////////////////////////////////////////////////////////////////////
+
+  @UseInterceptors(ClassSerializerInterceptor)
   @Get()
   fillAll() {
     return this.usersService.findAll();

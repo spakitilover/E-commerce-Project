@@ -8,7 +8,6 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { userInfo } from 'os';
 import { JwtLocalGuard } from 'src/auth/jwt-local.guard';
 import { GetUser } from 'src/users/decorator/user.decorator';
 import { OrderDto } from './dto/order.dto';
@@ -30,8 +29,8 @@ export class OrderController {
 
   @UseGuards(JwtLocalGuard)
   @Post()
-  async createOrder(@Body() orderDto: OrderDto) {
-    return await this.orderService.createOrder(orderDto);
+  async createOrder(@Body() orderDto: OrderDto, @GetUser() user) {
+    return await this.orderService.createOrder(orderDto, user);
   }
 
   @Delete(':id')

@@ -1,10 +1,5 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-
 import { Orders } from 'src/order/entity/order.entity';
 import { Repository } from 'typeorm';
 import { UsersDto } from './dto/users.dto';
