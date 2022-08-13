@@ -29,8 +29,8 @@ export class OrderController {
 
   @UseGuards(JwtLocalGuard)
   @Post()
-  async createOrder(@Body() orderDto: OrderDto, @GetUser() user) {
-    return await this.orderService.createOrder(orderDto, user);
+  async createOrder(@GetUser() user) {
+    return await this.orderService.createOrder(user);
   }
 
   @Delete(':id')

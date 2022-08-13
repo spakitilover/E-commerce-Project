@@ -9,7 +9,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CategoryService } from 'src/category/category.service';
 import { CategoryDto } from 'src/category/dto/category.dto';
 import { Category } from 'src/category/entity/category.entity';
-
 import { Repository } from 'typeorm';
 import { ProductsDto } from './dto/product.dto';
 import { Products } from './entity/product.entity';
@@ -27,7 +26,10 @@ export class ProductService {
   }
 
   async findById(id: number) {
-    const product = await this.productRepo.findOne({ where: { id: id } });
+    const product = await this.productRepo.findOne({
+      where: { id: id },
+      relations: ['category'],
+    });
     if (!product) {
       throw new NotFoundException('product with this id is not exist');
     }
@@ -37,7 +39,9 @@ export class ProductService {
   async createProduct(productDto: ProductsDto, categorys: CategoryDto) {
     const productss = await this.productRepo.create(productDto);
 
-    const category = await this.categoryRepo.create({ id: categorys.id });
+    const category = await this.categoryRepo.create({
+      id: categorys.category_id,
+    });
 
     await this.categoryRepo.save(category);
 

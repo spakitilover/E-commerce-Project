@@ -26,6 +26,11 @@ export class ProductController {
     return await this.productService.findAll();
   }
 
+  @Get(':id')
+  async findById(@Param('id') id: number) {
+    return await this.productService.findById(id);
+  }
+
   @Post()
   async createProduct(@Body() body: ProductsDto, @Body() cate: CategoryDto) {
     return await this.productService.createProduct(body, cate);

@@ -33,6 +33,7 @@ export class UsersController {
     return this.authService.login(user);
   }
 
+  @UseInterceptors(ClassSerializerInterceptor)
   @UseGuards(JwtLocalGuard)
   @Get('pro')
   proc(@GetUser() user) {

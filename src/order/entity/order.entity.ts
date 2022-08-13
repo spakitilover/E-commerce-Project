@@ -17,7 +17,7 @@ export class Orders {
   id: number;
 
   @Column()
-  total: number;
+  message: string;
 
   @CreateDateColumn()
   created_at: Date;

@@ -1,8 +1,6 @@
 import { Injectable, NotFoundException, Req } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ProductsDto } from 'src/product/dto/product.dto';
 import { Products } from 'src/product/entity/product.entity';
-import { UsersDto } from 'src/users/dto/users.dto';
 import { Users } from 'src/users/entity/users.entity';
 import { UsersService } from 'src/users/users.service';
 import { Repository } from 'typeorm';
@@ -23,15 +21,18 @@ export class OrderService {
   }
 
   async getOrderById(id: number) {
-    const found = await this.ordersRepo.findOne({ where: { id } });
+    const found = await this.ordersRepo.findOne({
+      where: { id },
+      relations: ['user'],
+    });
     if (!found) {
       throw new NotFoundException('no order with this id given');
     }
     return found;
   }
 
-  async createOrder(orderDto: OrderDto, user: Users) {
-    const order = await this.ordersRepo.create(orderDto);
+  async createOrder(user: Users) {
+    const order = await this.ordersRepo.create({ message: 'order created' });
 
     const users = await this.usersRepo.findOne({ where: { id: user.id } });
 

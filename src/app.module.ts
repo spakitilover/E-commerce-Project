@@ -6,9 +6,10 @@ import { ProductModule } from './product/product.module';
 import { AuthModule } from './auth/auth.module';
 import { OrderModule } from './order/order.module';
 import { CategoryModule } from './category/category.module';
+import { CartModule } from './cart/cart.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(TypeOrmConfig), UsersModule, ProductModule, AuthModule, OrderModule, CategoryModule],
+  imports: [TypeOrmModule.forRoot(TypeOrmConfig), UsersModule, ProductModule, AuthModule, OrderModule, CategoryModule, CartModule],
   controllers: [],
   providers: [],
 })
